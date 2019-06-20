@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sandwich Game of Trivia</title>
+    <style></style>
+    <link rel = "stylesheet" href = "appearance.css" />
+    <script src = "utilities.js"></script>
+    <script>
+	  function initialize() 
+	  {
+      qContainer = [];
+      temp = [];
+      random = [];
+      aDirection = ["fromtop", "fromright", "frombottom", "fromleft"];
+      questions = [];
+      answers = [];
+
+      for (var i=0; i<24; i++)
+        questions[i] = i+1;
+      for (var i=0; i<24; i++)
+        answers[i] = 2*(i+1);
+
+      degree = 0;
+      scale = 1;
+      sChoice = 0;
+
+      tScreen = document.getElementById("titlescreen");
+      qScreen = document.getElementById("qscreen");
+      aScreen = document.getElementById("ascreen");
+
+      createDiv();
+
+      display();
+    }
+
+    function start(x)
+    {
+      if (x<540)
+      {
+        degree++;
+        scale = (540 - degree) / 540;
+        tScreen.style.transform = "rotateY("+ degree + "deg) scale3d(" + scale + "," + scale + "," + scale + ")";
+        setTimeout(function() { start(degree) }, 1);
+      }
+      if (scale==0)
+        display();
+    }
+
+    function createDiv()
+    {
+      for (var i=0; i<24; i++)
+        temp[i] = i + 1;
+
+      temp = shuffle(temp);
+
+      for (var i=0; i<24; i++)
+        qContainer[i] = "<div id = 'q" + temp[i] + "' onclick=select('q"+ temp[i] + "');>Q" + temp[i] + "</div>";
+    }
+
+    function shuffle(array)
+    {
+      var j = 0;
+      var tempNum;
+
+      for (var i=0; i<array.length; i++)
+      {
+        j = getRandomInteger(0,array.length-1);
+        tempNum = array[i];
+        array[i] = array[j];
+        array[j] = tempNum;
+      }
+
+      return array;
+    }
+
+    function select(y)
+    {
+      document.getElementById(y).style.visibility = "hidden";
+      getScreen(y);
+    }
+
+    function deselect(y)
+    {
+      document.getElementById(y).style.visibility = "visible";
+      document.getElementById(y).setAttribute( "onClick", "select('" + y + "');" );
+    }
+
+    function getScreen(z)
+    {
+      var num = z.split(/(\d+)/).filter(Boolean);
+      sChoice = getRandomInteger(0,3);
+
+      qScreen.classList.add(aDirection[sChoice]);
+
+      qScreen.style.display = "block";
+      qScreen.style.opacity = 1;
+      qScreen.innerHTML = "<div>" + questions[num[1]-1] + "</div>";
+      qScreen.setAttribute( "onClick", "revealA('" + num[1] + "');fadeswitch(100);" );
+      setTimeout(function() { document.getElementById("qbox").style.opacity = 0;  document.body.style.backgroundColor = "rgb(19, 17, 157)"; }, 1000);
+    }
+
+    function fadeswitch(num)
+    {
+      if (num>=0)
+      {
+        qScreen.style.opacity = num/100;
+        aScreen.style.opacity = (100-num)/100;
+        num--;
+        setTimeout(function() { fadeswitch(num); }, 10);
+      }
+    }
+
+    function revealA(a)
+    {
+      aScreen.style.display = "block";
+      aScreen.innerHTML = "<div>" + answers[a-1] + "</div>";
+      aScreen.setAttribute( "onClick", "removeScreen();" );
+    }
+
+    function removeScreen()
+    {
+      aScreen.classList.add(aDirection[sChoice]);
+      aScreen.style.animationDirection = "reverse";
+      qScreen.classList.remove(aDirection[sChoice]);
+      qScreen.style.display = "none";
+      document.body.style.backgroundColor = "black";
+      document.getElementById("qbox").style.opacity = 1;
+      setTimeout(function() { aScreen.style.display = "none"; aScreen.classList.remove(aDirection[sChoice]) }, 999);
+    }
+
+	  function display() 
+	  {
+      qbox.innerHTML = qContainer.join(" ");
+      
+	  }
+    </script>
+  </head>
+
+  <body onload="initialize();">
+    <div onclick = "start(0);" id = "titlescreen">
+      <img src="https://fontmeme.com/permalink/190620/b3479096b6c6b39ee1af71ec4450d99c.png" alt="jeopardy-font" border="0">
+    </div>
+    <div id = "qbox" class="flex-container"></div>
+    <div id = "qscreen" class = "screen"></div>
+    <div id = "ascreen" class = "screen"></div>
+  </body>
+</html>
