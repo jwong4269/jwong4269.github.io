@@ -1,0 +1,115 @@
+body
+{
+    background-color: black;
+}
+
+.flex-container
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 98vw;
+}
+
+#qbox
+{
+    flex-direction: column;
+    height: 97vh;
+    font: 60px impact;
+    color: #ffcc00;
+}
+
+.flex-container > div 
+{
+    position: relative;
+    background-color: #13119d;
+    width: calc(100vw / 6.4);
+    margin: 2px;
+    text-align: center;
+    line-height: calc(100vh / 4.5);
+    cursor: pointer;
+    z-index: 1;
+}
+
+#titlescreen
+{
+    position: fixed;
+    background-color: #13119d;
+    border: 10px solid black;
+    width: 98.5vw;
+    height: 97vh;
+    text-align: center;
+    line-height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform: rotateY(0deg) scale3d(1,1,1);
+    cursor: pointer;
+}
+
+.screen
+{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0vh;
+    right: 0vw;
+    background-color: #13119d;
+    display: none;
+    z-index: 3;
+    color: #ffcc00;
+    font:50pt impact;
+    text-align: center;
+}
+
+.screen div
+{
+    line-height: 100vh;
+    height: 100vh;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.fromtop
+{
+    animation: movefromtop 1.00s ease 1 alternate;
+}
+
+@keyframes movefromtop
+{
+    from{top: -100vh;}
+    to{top: 0vh;}
+}
+
+.fromright
+{
+    animation: movefromright 1.00s ease 1 alternate;
+}
+
+@keyframes movefromright
+{
+    from{right: -100vw;}
+    to{right: 0vw;}
+}
+
+.frombottom
+{
+    animation: movefrombottom 1.00s ease 1 alternate;
+}
+
+@keyframes movefrombottom
+{
+    from{top: 100vh;}
+    to{top: 0vh;}
+}
+
+.fromleft
+{
+    animation: movefromleft 1.00s ease 1 alternate;
+}
+
+@keyframes movefromleft
+{
+    from{right: 100vw;}
+    to{right: 0vw;}
+}
