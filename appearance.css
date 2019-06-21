@@ -60,6 +60,7 @@ body
     color: #ffcc00;
     font:50pt impact;
     text-align: center;
+    cursor: pointer;
 }
 
 .screen div
