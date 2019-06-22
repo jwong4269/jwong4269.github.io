@@ -21,4 +21,4 @@ Question:What is Planck's constant to 3 decimal places?Include Units.@Answer:6.6
 Question:What are the three primary colors?@Answer:Red, Blue, Yellow@(Easy)@
 Question:What is the world’s longest river?@Answer:The Nile river@(Mediocre)@
 Question:What did McDonald's first serve when it started out?@Answer:Hotdogs@(Hard)@
-Question:What was the hottest temperature ever recorded on Earth in Kelvin?@Answer:2 billion degrees Kelvin; 2*10<sup>9</sup>K@(Insane)@
+Question:What was the hottest temperature ever recorded on Earth in Kelvin?@Answer:2 billion degrees Kelvin; 2*10<sup>9</sup>K@(Insane)
