@@ -65,10 +65,22 @@ body
 
 .screen div
 {
-    line-height: 100vh;
-    height: 100vh;
+    width: 75vw;
+    height: 90vh;
     display: inline-block;
     vertical-align: middle;
+}
+
+#difficulty
+{
+    
+    width: 100vw;
+    bottom: 2vh;
+    font: 36pt impact;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    z-index: 4;
 }
 
 .fromtop

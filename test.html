@@ -6,12 +6,45 @@
     <script>
 	  function initialize() 
 	  {
-      fetch('https://jwong4269.github.io/QsandAs.txt')
+      /*fetch('https://jwong4269.github.io/QsandAs.txt')
   .then(response => response.text())
   .then((data) => {
     console.log(data)
-  })
+  })*/
+  //let response = fetch('https://jwong4269.github.io/QsandAs.txt');
+  //let text = await response.text();
+  //alert(txt);
+//if (response.ok) { // if HTTP-status is 200-299
+  // get the response body (see below)
+  //let text = response.text();
+  //alert(text);
+//} else {
+  //alert("HTTP-Error: " + response.status);
+//}
+  grabText();
+  var hello = "How you?";
+  alert(hello.insert(3, "are"));
     }
+
+    async function grabText()
+    {
+      let response = await fetch('https://jwong4269.github.io/QsandAs.txt');
+
+      if (response.ok) { // if HTTP-status is 200-299
+        // get the response body (see below)
+        let text = await response.text();
+        return text;
+      } else {
+        alert("HTTP-Error: " + response.status);
+      }
+    }
+
+    String.prototype.insert = function (index, string) {
+  if (index > 0)
+    return this.substring(0, index+1) + string + this.substring(index, this.length);
+
+  return string + this;
+};
 
 	  function display() 
 	  {

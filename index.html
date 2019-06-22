@@ -14,11 +14,10 @@
       aDirection = ["fromtop", "fromright", "frombottom", "fromleft"];
       questions = [];
       answers = [];
+      qMode = [];
+      QandA = [];
 
-      for (var i=0; i<24; i++)
-        questions[i] = i+1;
-      for (var i=0; i<24; i++)
-        answers[i] = 2*(i+1);
+      grabText();
 
       degree = 0;
       scale = 1;
@@ -29,8 +28,6 @@
       aScreen = document.getElementById("ascreen");
 
       createDiv();
-
-      display();
     }
 
     function start(x)
@@ -94,7 +91,7 @@
 
       qScreen.style.display = "block";
       qScreen.style.opacity = 1;
-      qScreen.innerHTML = "<div>" + questions[num[1]-1] + "</div>";
+      qScreen.innerHTML = "<div>" + questions[num[1]-1] + "</div><div id = 'difficulty'>" + qMode[num[1]-1] + "</div>";
       qScreen.setAttribute( "onClick", "revealA('" + num[1] + "');fadeswitch(100);" );
       setTimeout(function() { document.getElementById("qbox").style.opacity = 0;  document.body.style.backgroundColor = "rgb(19, 17, 157)"; }, 1000);
     }
@@ -113,7 +110,7 @@
     function revealA(a)
     {
       aScreen.style.display = "block";
-      aScreen.innerHTML = "<div>" + answers[a-1] + "</div>";
+      aScreen.innerHTML = "<div>" + answers[a-1] + "</div><div id = 'difficulty'>" + qMode[a-1] + "</div>";
       aScreen.setAttribute( "onClick", "removeScreen();" );
     }
 
@@ -128,10 +125,40 @@
       setTimeout(function() { aScreen.style.display = "none"; aScreen.classList.remove(aDirection[sChoice]) }, 999);
     }
 
+    async function grabText()
+    {
+      let response = await fetch('https://jwong4269.github.io/QsandAs.txt');
+
+      if (response.ok) { // if HTTP-status is 200-299
+        // get the response body (see below)
+        let text = await response.text();
+        var string = text.toString();
+        QandA = string.split("@");
+        for (var i=0; i<QandA.length; i++)
+          if (i % 3 == 0)
+            questions[i / 3] = QandA[i].insert(QandA[i].search(":")+1, "<br />");
+        for (var i=0; i<QandA.length; i++)
+          if ((i - 1) % 3 == 0)
+            answers[(i - 1) / 3] = QandA[i].insert(QandA[i].search(":")+1, "<br />");
+        for (var i=0; i<QandA.length; i++)
+          if ((i - 2) % 3 == 0)
+            qMode[(i - 2) / 3] = QandA[i].insert(1, "Difficulty: ");
+      } else {
+        alert("HTTP-Error: " + response.status);
+      }
+    }
+
+    String.prototype.insert = function (index, string) 
+    {
+      if (index > 0)
+        return this.substring(0, index) + string + this.substring(index, this.length);
+
+      return string + this;
+    };
+
 	  function display() 
 	  {
       qbox.innerHTML = qContainer.join(" ");
-      
 	  }
     </script>
   </head>
